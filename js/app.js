@@ -10,6 +10,20 @@ class CalorieTracker {
 
     // ストレージ使用量を監視
     this.checkStorageUsage();
+    // 既存mealsのmenuName/menuCalories補完
+    this.meals.forEach((meal) => {
+      if (
+        meal.menuId &&
+        (meal.menuName === undefined || meal.menuCalories === undefined)
+      ) {
+        const menu = this.menus.find((m) => m.id === meal.menuId);
+        if (menu) {
+          meal.menuName = menu.name;
+          meal.menuCalories = menu.calories;
+        }
+      }
+    });
+    this.saveMeals();
   }
 
   // ストレージ使用量を計算して警告を表示
@@ -179,13 +193,31 @@ class CalorieTracker {
 
   // 食事関連のメソッド
   addMeal(date, menuId, customName = null, customCalories = null) {
-    const meal = {
-      id: Date.now(),
-      date,
-      menuId,
-      customName,
-      customCalories: customCalories ? parseInt(customCalories) : null,
-    };
+    let meal;
+    if (menuId) {
+      // メニュー選択時はname/caloriesもコピー
+      const menu = this.menus.find((m) => m.id === menuId);
+      meal = {
+        id: Date.now(),
+        date,
+        menuId,
+        menuName: menu ? menu.name : null,
+        menuCalories: menu ? menu.calories : null,
+        customName: null,
+        customCalories: null,
+      };
+    } else {
+      // カスタム入力時
+      meal = {
+        id: Date.now(),
+        date,
+        menuId: null,
+        menuName: null,
+        menuCalories: null,
+        customName,
+        customCalories: customCalories ? parseInt(customCalories) : null,
+      };
+    }
     this.meals.push(meal);
     this.saveMeals();
     return meal;
@@ -357,7 +389,10 @@ class CalorieTracker {
       if (mealDate >= start && mealDate < end) {
         if (meal.customCalories !== null) {
           return total + meal.customCalories;
+        } else if (meal.menuCalories !== null) {
+          return total + meal.menuCalories;
         } else {
+          // 旧データ互換
           const menu = this.menus.find((m) => m.id === meal.menuId);
           return total + (menu ? menu.calories : 0);
         }
@@ -784,6 +819,9 @@ class UIController {
         if (meal.customName) {
           name = meal.customName;
           calories = meal.customCalories;
+        } else if (meal.menuName && meal.menuCalories !== null) {
+          name = meal.menuName;
+          calories = meal.menuCalories;
         } else {
           const menu = this.tracker.menus.find((m) => m.id === meal.menuId);
           name = menu ? menu.name : "不明なメニュー";
