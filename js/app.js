@@ -674,7 +674,10 @@ class UIController {
       const dd = String(today.getDate()).padStart(2, "0");
       document.getElementById("mealDate").value = `${yyyy}-${mm}-${dd}`;
     } else if (sectionId === "stats") {
-      this.updateStats("daily");
+      // プルダウンの選択値を取得して統計を更新
+      const statsPeriodSelect = document.getElementById("statsPeriod");
+      const period = statsPeriodSelect ? statsPeriodSelect.value : "daily";
+      this.updateStats(period);
     } else if (sectionId === "goals") {
       // 目標設定画面を開いたときに現在の設定値を表示
       document.getElementById("dailyGoal").value = this.tracker.goals.daily;
@@ -827,6 +830,7 @@ class UIController {
           name = menu ? menu.name : "不明なメニュー";
           calories = menu ? menu.calories : 0;
         }
+        console.log("mealList debug:", meal, name, calories);
         return `
                     <div class="list-item">
                         <span>${meal.date}: ${name} (${calories}kcal)</span>

@@ -147,6 +147,15 @@ input[type="number"] {
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #eee;
+  gap: 10px;
+}
+.list-item span {
+  flex: 1 1 0%;
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
 }
 
 .list-item:last-child {
@@ -245,6 +254,34 @@ input[type="number"] {
 
   button {
     width: 100%;
+  }
+}
+
+/* 食事登録リストの削除ボタン幅統一 */
+.delete-meal {
+  min-width: 64px;
+  width: 80px;
+  max-width: 100px;
+  text-align: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .delete-meal {
+    width: 100px;
+    min-width: 64px;
+    max-width: 120px;
+  }
+  .list-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+  .list-item span {
+    width: 100%;
+    min-width: 0;
+    flex: none;
   }
 }
 
