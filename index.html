@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>オーバーカロリー - 目標達成のためのカロリー管理アプリ</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <style>
+      /* ランディングページ専用スタイル */
+      .hero {
+        background: linear-gradient(135deg, #2980b9, #3498db);
+        color: white;
+        text-align: center;
+        padding: 100px 20px;
+        margin: -20px -20px 60px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+          circle at 30% 50%,
+          rgba(41, 128, 185, 0.4) 0%,
+          transparent 50%
+        );
+      }
+
+      .hero h1 {
+        color: white;
+        font-size: 3em;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        position: relative;
+      }
+
+      .hero p {
+        font-size: 1.3em;
+        margin-bottom: 40px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+        position: relative;
+      }
+
+      .cta-button {
+        display: inline-block;
+        padding: 18px 48px;
+        font-size: 1.2em;
+        background: linear-gradient(135deg, #2980b9, #2c3e50);
+        color: white;
+        text-decoration: none;
+        border-radius: 30px;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+        transform: translateY(-100%);
+        transition: transform 0.3s;
+      }
+
+      .cta-button:hover::before {
+        transform: translateY(0);
+      }
+
+      .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(41, 128, 185, 0.4);
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+        margin: 80px 0;
+        padding: 0 20px;
+      }
+
+      .feature-card {
+        background: white;
+        padding: 40px 30px;
+        border-radius: 20px;
+        text-align: center;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #2980b9, #3498db);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .feature-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .feature-icon {
+        font-size: 2.5em;
+        margin-bottom: 25px;
+        background: linear-gradient(135deg, #2980b9, #3498db);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+      }
+
+      .highlights {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        padding: 80px 20px;
+        margin: 60px -20px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .highlights::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Cpath d='M30 5L5 30l25 25 25-25L30 5zm0 2.8l22.2 22.2L30 52.2 7.8 30 30 7.8z' fill='rgba(0,0,0,0.03)'/%3E%3C/svg%3E")
+          repeat;
+        opacity: 0.5;
+      }
+
+      .highlight-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        max-width: 1200px;
+        margin: 60px auto;
+        position: relative;
+      }
+
+      .highlight-item {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+      }
+
+      .highlight-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      }
+
+      .highlight-number {
+        font-size: 2.5em;
+        font-weight: bold;
+        background: linear-gradient(135deg, #2980b9, #2c3e50);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 15px;
+        display: inline-block;
+      }
+
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2em;
+        }
+
+        .features {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <style>
+        .hero-content {
+          position: relative;
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        @media (max-width: 768px) {
+          .hero-content {
+            padding: 0 15px;
+          }
+        }
+      </style>
+      <section class="hero">
+        <div class="hero-content">
+          <h1>バルクアップのための新発想カロリー管理アプリ</h1>
+          <p>
+            筋肉を育てるには、適切なオーバーカロリーが欠かせません。
+            通常のダイエットアプリとは逆の発想で、より多く食べることを応援します。
+          </p>
+          <p>
+            目標設定もアプリ内でサポートしています。あなたに合ったカロリー目標を簡単に設定できます。
+          </p>
+          <a href="app.html" class="cta-button">アプリを使ってみる</a>
+        </div>
+      </section>
+
+      <section class="features">
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>シンプルな操作性</h3>
+          <p>
+            直感的なUIで簡単にカロリー管理ができます。
+            面倒な設定は不要で、すぐに使い始められます。
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>目標達成の喜び</h3>
+          <p>
+            カロリーオーバーという新しい目標設定で、
+            食事の楽しみを保ちながら目標達成を目指せます。
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>オフライン対応</h3>
+          <p>
+            ブラウザのローカルストレージを活用し、
+            オフラインでも4万件以上の食事データを記録できます。
+          </p>
+        </div>
+      </section>
+
+      <section class="highlights">
+        <h2>アプリのハイライト</h2>
+        <p style="font-size: 1.2em; color: #444; margin-bottom: 40px">
+          体重1kgの増量には約7,000kcalの余剰摂取が必要です。<br />
+          1日300kcal増やすと、約23日で達成できます！
+        </p>
+        <div class="highlight-grid">
+          <div class="highlight-item">
+            <div class="highlight-number">40,000+</div>
+            <p>記録可能な食事データ数</p>
+            <div style="font-size: 0.9em; color: #444; margin-top: 10px">
+              <p>1日3食で約36年分</p>
+              <p>1日5食で約22年分</p>
+              <p>1日10食で約11年分</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-number">3つ</div>
+            <p>統計期間（日次/週次/月次）</p>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-number">0円</div>
+            <p>利用料金</p>
+          </div>
+        </div>
+      </section>
+
+      <style>
+        .bulk-up-section {
+          text-align: center;
+          padding: 100px 20px;
+          background: linear-gradient(135deg, #2980b9, #2c3e50);
+          color: white;
+          margin: 60px -20px;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .bulk-up-section::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: radial-gradient(
+            circle at 70% 30%,
+            rgba(41, 128, 185, 0.15) 0%,
+            transparent 70%
+          );
+        }
+
+        .bulk-up-content {
+          max-width: 1000px;
+          margin: 0 auto;
+          position: relative;
+        }
+
+        .bulk-up-title {
+          color: white;
+          font-size: 2.5em;
+          margin-bottom: 30px;
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .bulk-up-description {
+          font-size: 1.2em;
+          opacity: 1;
+          max-width: 600px;
+          margin: 0 auto 50px;
+          line-height: 1.6;
+        }
+
+        .bulk-up-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 40px;
+        }
+
+        .bulk-up-card {
+          background: rgba(255, 255, 255, 0.1);
+          padding: 40px 30px;
+          border-radius: 20px;
+          backdrop-filter: blur(10px);
+          transition: all 0.3s;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .bulk-up-card::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(rgba(255, 255, 255, 0.1), transparent);
+          transform: translateY(-100%);
+          transition: transform 0.3s;
+        }
+
+        .bulk-up-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .bulk-up-card:hover::before {
+          transform: translateY(0);
+        }
+
+        .bulk-up-card h3 {
+          color: white;
+          font-size: 1.5em;
+          margin-bottom: 20px;
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .bulk-up-card p {
+          line-height: 1.6;
+          opacity: 0.9;
+        }
+      </style>
+
+      <section class="bulk-up-section">
+        <div class="bulk-up-content">
+          <h2 class="bulk-up-title">バルクアップに最適</h2>
+          <p class="bulk-up-description">
+            筋肉の成長に必要な十分なカロリー摂取を、科学的なアプローチでサポートします。
+          </p>
+          <div class="bulk-up-grid">
+            <div class="bulk-up-card">
+              <h3>オーバーカロリーの重要性</h3>
+              <p>
+                筋肉の成長には十分なカロリー摂取が欠かせません。目標を立てて、確実にオーバーカロリーを達成しましょう。
+              </p>
+            </div>
+            <div class="bulk-up-card">
+              <h3>確実な成長のために</h3>
+              <p>
+                日々の食事を記録し、カロリー目標の達成度を可視化。筋トレと合わせて、効果的なバルクアップを実現できます。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <style>
+        .final-cta {
+          text-align: center;
+          padding: 80px 20px;
+          margin: 60px 0;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .final-cta::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: radial-gradient(
+            circle at 30% 50%,
+            rgba(231, 76, 60, 0.05) 0%,
+            transparent 70%
+          );
+          z-index: -1;
+        }
+
+        .final-cta h2 {
+          font-size: 2.5em;
+          margin-bottom: 30px;
+          color: #2c3e50;
+          position: relative;
+        }
+
+        .final-cta p {
+          font-size: 1.2em;
+          margin: 20px auto 40px;
+          max-width: 600px;
+          line-height: 1.6;
+          color: #444;
+          font-weight: 500;
+          position: relative;
+        }
+
+        @media (max-width: 768px) {
+          .final-cta h2 {
+            font-size: 2em;
+          }
+          .final-cta p {
+            font-size: 1.1em;
+          }
+        }
+      </style>
+
+      <section class="final-cta">
+        <h2>さっそく始めてみましょう</h2>
+        <p>面倒な登録は不要。このまますぐに使い始められます。</p>
+        <a href="app.html" class="cta-button">アプリを開く</a>
+      </section>
+    </div>
+  </body>
+</html>

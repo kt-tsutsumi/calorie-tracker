@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>カロリー管理アプリ</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .calculator-section {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .calculator-section h3 {
+        margin: 0 0 15px 0;
+        color: #2c3e50;
+        font-size: 1.4em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .calculator-section h3::before {
+        content: "📊";
+        font-size: 1.2em;
+      }
+
+      .input-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+        margin-bottom: 15px;
+      }
+
+      .goal-input {
+        margin-bottom: 0;
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .goal-input label {
+        display: block;
+        margin-bottom: 8px;
+        color: #2c3e50;
+        font-weight: 600;
+        font-size: 0.95em;
+      }
+
+      .goal-input input,
+      .goal-input select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 1em;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      .goal-input input:focus,
+      .goal-input select:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      }
+
+      .goal-input i {
+        margin-right: 5px;
+        color: #3498db;
+      }
+
+      #calculateCalories {
+        background: linear-gradient(135deg, #2980b9, #3498db);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        width: 100%;
+        margin: 15px 0;
+        font-size: 1.1em;
+        font-weight: 600;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 6px rgba(41, 128, 185, 0.1);
+      }
+
+      #calculateCalories:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(41, 128, 185, 0.2);
+      }
+
+      #calculateCalories:active {
+        transform: translateY(0);
+      }
+
+      .main-goal-section {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .goal-description {
+        color: #666;
+        font-size: 0.9em;
+        margin-top: 10px;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 6px;
+        border-left: 4px solid #3498db;
+      }
+
+      @media (min-width: 768px) {
+        .goals-form {
+          max-width: 700px;
+          margin: 0 auto;
+        }
+      }
+
+      .primary-button {
+        background: linear-gradient(135deg, #27ae60, #2ecc71);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 1.1em;
+        font-weight: 600;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 6px rgba(39, 174, 96, 0.1);
+      }
+
+      .primary-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(39, 174, 96, 0.2);
+      }
+
+      .primary-button:active {
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>カロリー管理アプリ</h1>
+        <nav>
+          <button id="showMenuManager">メニュー管理</button>
+          <button id="showMealEntry">食事登録</button>
+          <button id="showGoals">目標設定</button>
+          <button id="showStats">統計</button>
+        </nav>
+      </header>
+
+      <main>
+        <!-- メニュー管理セクション -->
+        <section id="menuManager" class="section">
+          <h2>メニュー管理</h2>
+          <div class="menu-form">
+            <input type="text" id="menuName" placeholder="メニュー名" />
+            <input type="number" id="menuCalories" placeholder="カロリー" />
+            <button id="addMenu" class="primary-button">登録</button>
+          </div>
+          <div id="menuList" class="list-container">
+            <!-- メニューリストがここに表示されます -->
+          </div>
+        </section>
+
+        <!-- 食事登録セクション -->
+        <section id="mealEntry" class="section">
+          <h2>食事登録</h2>
+          <div class="meal-form">
+            <input type="date" id="mealDate" />
+            <select id="mealMenu">
+              <option value="">メニューを選択</option>
+            </select>
+            <input
+              type="text"
+              id="customMealName"
+              placeholder="カスタムメニュー名"
+            />
+            <input
+              type="number"
+              id="customMealCalories"
+              placeholder="カスタムカロリー"
+            />
+            <button id="addMeal" class="primary-button">登録</button>
+          </div>
+          <div id="mealList" class="list-container">
+            <!-- 食事リストがここに表示されます -->
+          </div>
+        </section>
+
+        <!-- 目標設定セクション -->
+        <section id="goals" class="section">
+          <h2>目標設定</h2>
+          <div class="goals-form">
+            <div class="calculator-section">
+              <h3><i class="fas fa-calculator"></i> 増量計算機</h3>
+              <div class="input-grid">
+                <div class="goal-input">
+                  <label><i class="fas fa-user-alt"></i> 年齢:</label>
+                  <input
+                    type="number"
+                    id="userAge"
+                    placeholder="例: 25"
+                    min="15"
+                    max="100"
+                  />
+                </div>
+                <div class="goal-input">
+                  <label><i class="fas fa-weight"></i> 現在の体重(kg):</label>
+                  <input
+                    type="number"
+                    id="currentWeight"
+                    placeholder="例: 70"
+                    step="0.1"
+                    min="30"
+                    max="200"
+                  />
+                </div>
+                <div class="goal-input">
+                  <label
+                    ><i class="fas fa-chart-line"></i>
+                    1ヶ月の目標増加体重(kg):</label
+                  >
+                  <input
+                    type="number"
+                    id="targetWeight"
+                    placeholder="例: 2"
+                    step="0.1"
+                    min="0"
+                    max="5"
+                  />
+                </div>
+                <div class="goal-input">
+                  <label><i class="fas fa-running"></i> 活動レベル:</label>
+                  <select id="activityLevel">
+                    <option value="1.2">低い（デスクワーク中心）</option>
+                    <option value="1.375">普通（週1-2回の運動）</option>
+                    <option value="1.55">活発（週3-4回の運動）</option>
+                    <option value="1.725">非常に活発（週5-6回の運動）</option>
+                  </select>
+                </div>
+              </div>
+              <button id="calculateCalories">必要カロリーを計算</button>
+            </div>
+            <div class="main-goal-section">
+              <div class="goal-input">
+                <label
+                  ><i class="fas fa-bullseye"></i> 1日の目標カロリー:</label
+                >
+                <input type="number" id="dailyGoal" placeholder="例: 2000" />
+                <p class="goal-description">
+                  <i class="fas fa-info-circle"></i>
+                  週間・月間の目標は1日の目標から自動計算されます
+                </p>
+              </div>
+              <button id="saveGoals" class="primary-button">保存</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 統計セクション -->
+        <section id="stats" class="section">
+          <h2>統計</h2>
+          <div class="stats-controls">
+            <div class="period-selector">
+              <select id="statsPeriod">
+                <option value="daily">日次</option>
+                <option value="weekly">週次</option>
+                <option value="monthly">月次</option>
+              </select>
+            </div>
+            <div class="date-controls">
+              <button id="prevDate">◀</button>
+              <span id="currentDate">現在</span>
+              <button id="nextDate">▶</button>
+              <button id="todayDate">今日</button>
+            </div>
+          </div>
+          <div id="statsDisplay">
+            <!-- 統計情報がここに表示されます -->
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="js/app.js"></script>
+  </body>
+</html>
