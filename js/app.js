@@ -1034,6 +1034,51 @@ class UIController {
                 ${predictionMessage}
             </div>
         `;
+
+    // ChatGPT共有用食事リスト出力
+    const mealListText = this.generateMealListText(
+      stats.startDate,
+      stats.endDate
+    );
+    statsDisplay.innerHTML += `
+       <div style="margin-top:24px;">
+         <h4>選択期間の食事リスト（ChatGPT共有用）</h4>
+         <textarea readonly style="width:100%;height:120px;font-size:1em;">${mealListText}</textarea>
+       </div>
+     `;
+  }
+
+  // 選択期間の食事リストをChatGPT共有向けテキストで生成
+  generateMealListText(startDate, endDate) {
+    // endDateは含まない（[start, end)）
+    const mealsInPeriod = this.tracker.meals.filter((meal) => {
+      const mealDate = new Date(meal.date);
+      return mealDate >= startDate && mealDate < endDate;
+    });
+    if (mealsInPeriod.length === 0) {
+      return "食事記録はありません。";
+    }
+    let total = 0;
+    const lines = mealsInPeriod
+      .sort((a, b) => new Date(a.date) - new Date(b.date))
+      .map((meal) => {
+        let name, calories;
+        if (meal.customName) {
+          name = meal.customName;
+          calories = meal.customCalories;
+        } else if (meal.menuName && meal.menuCalories !== null) {
+          name = meal.menuName;
+          calories = meal.menuCalories;
+        } else {
+          const menu = this.tracker.menus.find((m) => m.id === meal.menuId);
+          name = menu ? menu.name : "不明なメニュー";
+          calories = menu ? menu.calories : 0;
+        }
+        total += parseInt(calories) || 0;
+        return `${meal.date}｜${name}｜${calories}kcal`;
+      });
+    lines.push(`合計カロリー: ${total}kcal`);
+    return lines.join("\n");
   }
 
   formatDateRange(startDate, endDate) {
