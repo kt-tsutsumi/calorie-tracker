@@ -34,7 +34,7 @@
       .hero h1 {
         color: white;
         font-size: 3em;
-        margin-bottom: 30px;
+        margin-bottom: 0;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         position: relative;
       }
@@ -199,21 +199,6 @@
   </head>
   <body>
     <div class="container">
-      <div
-        style="
-          background: #fffbe6;
-          color: #b8860b;
-          border: 1px solid #ffe58f;
-          border-radius: 8px;
-          padding: 16px;
-          margin: 24px 0 32px 0;
-          font-size: 1.05em;
-        "
-      >
-        <strong>ご注意</strong><br />
-        ・異なるブラウザや端末ではデータが引き継がれません。<br />
-        ・本サービスは予告なくクローズする可能性があります。
-      </div>
       <style>
         .hero-content {
           position: relative;
@@ -230,15 +215,33 @@
       </style>
       <section class="hero">
         <div class="hero-content">
-          <h1>バルクアップのための新発想カロリー管理アプリ</h1>
+          <h1>理想のバルクアップをサポート</h1>
+          <p
+            class="hero-caption"
+            style="font-size: 1.3em; color: #e3f2fd; margin-top: 4px"
+          >
+            バルクアップに特化したカロリー管理アプリ
+          </p>
           <p>
             筋肉を育てるには、適切なオーバーカロリーが欠かせません。
             通常のダイエットアプリとは逆の発想で、より多く食べることを応援します。
           </p>
-          <p>
-            目標設定もアプリ内でサポートしています。あなたに合ったカロリー目標を簡単に設定できます。
-          </p>
           <a href="app.html" class="cta-button">アプリを使ってみる</a>
+          <div
+            style="
+              background: #fffbe6;
+              color: #b8860b;
+              border: 1px solid #ffe58f;
+              border-radius: 8px;
+              padding: 16px;
+              margin: 24px 0 32px 0;
+              font-size: 1.05em;
+            "
+          >
+            <strong>ご注意</strong><br />
+            ・異なるブラウザや端末ではデータが引き継がれません。<br />
+            ・本サービスは予告なくクローズする可能性があります。
+          </div>
         </div>
       </section>
 
@@ -247,34 +250,51 @@
           <div class="feature-icon">📊</div>
           <h3>シンプルな操作性</h3>
           <p>
-            直感的なUIで簡単にカロリー管理ができます。
-            面倒な設定は不要で、すぐに使い始められます。
+            直感的なUIで簡単にカロリー管理ができます。面倒な設定は不要で、すぐに使い始められます。
           </p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">🎯</div>
-          <h3>目標達成の喜び</h3>
+          <h3>AI活用で食事管理が進化</h3>
           <p>
-            カロリーオーバーという新しい目標設定で、
-            食事の楽しみを保ちながら目標達成を目指せます。
+            ワンクリックで食事内容をコピーでき、AI（ChatGPT等）に貼り付けてアドバイスやフィードバックをもらえます。<br />
+            日々の食事管理がもっと楽しく、効果的に！
           </p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">📱</div>
-          <h3>オフライン対応</h3>
+          <h3>プライバシー重視の設計</h3>
           <p>
-            ブラウザのローカルストレージを活用し、
-            オフラインでも4万件以上の食事データを記録できます。
+            あなたの食事データは端末内にのみ保存され、外部サーバーには送信されません。個人情報を気にせず、安心してご利用いただけます。
           </p>
         </div>
       </section>
 
+      <section class="bulk-up-section">
+        <div class="bulk-up-content">
+          <h2 class="bulk-up-title">効率的なバルクアップを実現</h2>
+          <p class="bulk-up-description">
+            目標設定から日々の記録まで、効率的なカロリー管理で最短ルートで理想のカラダへ。<br />
+            続けやすい仕組みで成果を実感できます。
+          </p>
+          <div class="bulk-up-grid">
+            <div class="bulk-up-card">
+              <h3>オーバーカロリーで理想の成果へ</h3>
+              <p>
+                オーバーカロリーを意識した食事管理で、効率よく筋肉を増やしましょう。しっかり食べることが、理想のカラダへの最短ルートです。
+              </p>
+            </div>
+            <div class="bulk-up-card">
+              <h3>続けやすさを重視</h3>
+              <p>
+                シンプルな記録と見やすい進捗表示で、毎日の習慣化をサポート。継続が成果につながる仕組みです。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
       <section class="highlights">
         <h2>アプリのハイライト</h2>
-        <p style="font-size: 1.2em; color: #444; margin-bottom: 40px">
-          体重1kgの増量には約7,000kcalの余剰摂取が必要です。<br />
-          1日300kcal増やすと、約23日で達成できます！
-        </p>
         <div class="highlight-grid">
           <div class="highlight-item">
             <div class="highlight-number">40,000+</div>
@@ -286,12 +306,12 @@
             </div>
           </div>
           <div class="highlight-item">
-            <div class="highlight-number">3つ</div>
-            <p>統計期間（日次/週次/月次）</p>
+            <div class="highlight-number">10秒</div>
+            <p>登録不要、すぐに使い始められます</p>
           </div>
           <div class="highlight-item">
             <div class="highlight-number">0円</div>
-            <p>利用料金</p>
+            <p>必要なのは、あなたのやる気だけです</p>
           </div>
         </div>
       </section>
@@ -299,12 +319,25 @@
       <style>
         .bulk-up-section {
           text-align: center;
-          padding: 100px 20px;
+          padding: 100px 20px 60px 20px;
           background: linear-gradient(135deg, #2980b9, #2c3e50);
           color: white;
-          margin: 60px -20px;
+          margin: 0;
           position: relative;
           overflow: hidden;
+        }
+        .highlights {
+          background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+          padding: 60px 20px 80px 20px;
+          margin: 0;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        }
+        .bulk-up-content {
+          max-width: 800px;
+          margin: 0 auto;
+          position: relative;
         }
 
         .bulk-up-section::before {
@@ -392,34 +425,11 @@
         }
       </style>
 
-      <section class="bulk-up-section">
-        <div class="bulk-up-content">
-          <h2 class="bulk-up-title">バルクアップに最適</h2>
-          <p class="bulk-up-description">
-            筋肉の成長に必要な十分なカロリー摂取を、科学的なアプローチでサポートします。
-          </p>
-          <div class="bulk-up-grid">
-            <div class="bulk-up-card">
-              <h3>オーバーカロリーの重要性</h3>
-              <p>
-                筋肉の成長には十分なカロリー摂取が欠かせません。目標を立てて、確実にオーバーカロリーを達成しましょう。
-              </p>
-            </div>
-            <div class="bulk-up-card">
-              <h3>確実な成長のために</h3>
-              <p>
-                日々の食事を記録し、カロリー目標の達成度を可視化。筋トレと合わせて、効果的なバルクアップを実現できます。
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <style>
         .final-cta {
           text-align: center;
           padding: 80px 20px;
-          margin: 60px 0;
+          margin: 0;
           position: relative;
           overflow: hidden;
         }

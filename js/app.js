@@ -1059,6 +1059,8 @@ class UIController {
       return "食事記録はありません。";
     }
     let total = 0;
+    const dailyGoal = this.tracker.goals.daily || 0;
+    const header = `現在増量中です。1日の目標カロリーは${dailyGoal}kcalです。\n`;
     const lines = mealsInPeriod
       .sort((a, b) => new Date(a.date) - new Date(b.date))
       .map((meal) => {
@@ -1078,7 +1080,7 @@ class UIController {
         return `${meal.date}｜${name}｜${calories}kcal`;
       });
     lines.push(`合計カロリー: ${total}kcal`);
-    return lines.join("\n");
+    return header + lines.join("\n");
   }
 
   formatDateRange(startDate, endDate) {
